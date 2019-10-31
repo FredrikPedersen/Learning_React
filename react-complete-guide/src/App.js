@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import Radium from "radium";
+import Radium, {StyleRoot} from "radium";
 import Person from './Person/Person'
 
 
@@ -61,16 +61,16 @@ class App extends Component {
         };
 
         let persons = null;
-        if(this.state.showPersons) {
+        if (this.state.showPersons) {
             persons = (
                 <div>
                     {this.state.persons.map((person, index) => {
                         return <Person
-                            click = {() => this.deletePersonHandler(index)}
-                            name = {person.name}
-                            age = {person.age}
-                            key = {person.id}
-                            change = {(event) => this.nameChangedHandler(event, person.id)}/>
+                            click={() => this.deletePersonHandler(index)}
+                            name={person.name}
+                            age={person.age}
+                            key={person.id}
+                            change={(event) => this.nameChangedHandler(event, person.id)}/>
                     })}
                 </div>
             );
@@ -99,17 +99,19 @@ class App extends Component {
 
         //NOTE! classes.join turns the classes-array into a single String with a space between each element!
         return (
-            <div className="App">
-                <h1>Hi, I'm a React App</h1>
-                <p className={classes.join(' ')}>{counterText}</p>
-                <button
-                    style={style}
-                    onClick={this.togglePersonsHandler}>
-                    Toggle Persons
-                </button>
-                {persons}
-            </div>
-        )
+            <StyleRoot>
+                <div className="App">
+                    <h1>Hi, I'm a React App</h1>
+                    <p className={classes.join(' ')}>{counterText}</p>
+                    <button
+                        style={style}
+                        onClick={this.togglePersonsHandler}>
+                        Toggle Persons
+                    </button>
+                    {persons}
+                </div>
+            </StyleRoot>
+        );
     }
 }
 
