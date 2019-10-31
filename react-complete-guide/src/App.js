@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
+import Radium from "radium";
 import Person from './Person/Person'
 
 
@@ -52,7 +53,11 @@ class App extends Component {
             font: 'inherit',
             border: '1px solid blue',
             padding: '8px',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            ':hover': {
+                backgroundColor: 'lightgreen',
+                color: 'black'
+            }
         };
 
         let persons = null;
@@ -71,6 +76,10 @@ class App extends Component {
             );
 
             style.backgroundColor = 'red';
+            style[':hover'] = {
+                backgroundColor: 'salmon',
+                color: 'black'
+            }
         }
 
         let classes = [];
@@ -83,16 +92,16 @@ class App extends Component {
             classes.push('bold');
         }
 
-        let counter = "There are " + this.state.persons.length + " persons in the list!";
+        let counterText = "There are " + this.state.persons.length + " persons in the list!";
         if (this.state.persons.length === 0) {
-            counter += " :( ";
+            counterText += " :( ";
         }
 
         //NOTE! classes.join turns the classes-array into a single String with a space between each element!
         return (
             <div className="App">
                 <h1>Hi, I'm a React App</h1>
-                <p className={classes.join(' ')}>{counter}</p>
+                <p className={classes.join(' ')}>{counterText}</p>
                 <button
                     style={style}
                     onClick={this.togglePersonsHandler}>
@@ -104,4 +113,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default Radium(App);
