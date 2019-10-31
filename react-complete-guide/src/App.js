@@ -7,7 +7,8 @@ class App extends Component {
     state = {
         persons: [
             {id: '1', name: 'Fredrik', age: 25},
-            {id: '2', name: "Anders", age: 23}
+            {id: '2', name: "Anders", age: 23},
+            {id: '3', name: "Signe", age: 22}
         ],
         showPersons: false
     };
@@ -72,9 +73,26 @@ class App extends Component {
             style.backgroundColor = 'red';
         }
 
+        let classes = [];
+
+        if (this.state.persons.length <= 2) {
+            classes.push('red');
+        }
+
+        if (this.state.persons.length <= 1) {
+            classes.push('bold');
+        }
+
+        let counter = "There are " + this.state.persons.length + " persons in the list!";
+        if (this.state.persons.length === 0) {
+            counter += " :( ";
+        }
+
+        //NOTE! classes.join turns the classes-array into a single String with a space between each element!
         return (
             <div className="App">
                 <h1>Hi, I'm a React App</h1>
+                <p className={classes.join(' ')}>{counter}</p>
                 <button
                     style={style}
                     onClick={this.togglePersonsHandler}>
