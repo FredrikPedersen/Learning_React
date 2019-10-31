@@ -22,7 +22,10 @@ class App extends Component {
     };
 
     deletePersonHandler = (personIndex) => {
-        const persons = this.state.persons;
+        //const persons = this.state.persons.slice(); //Copies the persons array contained in state so we don't mutate the original array
+        const persons = [...this.state.persons]; //Copies the persons array contained in state so we don't mutate the original array - using the spread operator
+
+        //Never mutate the original state. Create a copy, change that, and then update the state. This is to make applications more predictable in behaviour
         persons.splice(personIndex, 1);
         this.setState({persons: persons})
     };
