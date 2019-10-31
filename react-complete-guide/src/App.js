@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
-import Radium, {StyleRoot} from "radium";
+import classes from './App.css';
 import Person from './Person/Person'
 
 
@@ -53,11 +52,7 @@ class App extends Component {
             font: 'inherit',
             border: '1px solid blue',
             padding: '8px',
-            cursor: 'pointer',
-            ':hover': {
-                backgroundColor: 'lightgreen',
-                color: 'black'
-            }
+            cursor: 'pointer'
         };
 
         let persons = null;
@@ -82,14 +77,14 @@ class App extends Component {
             }
         }
 
-        let classes = [];
+        let assignedClasses = [];
 
         if (this.state.persons.length <= 2) {
-            classes.push('red');
+            assignedClasses.push(classes.bold);
         }
 
         if (this.state.persons.length <= 1) {
-            classes.push('bold');
+            assignedClasses.push(classes.red);
         }
 
         let counterText = "There are " + this.state.persons.length + " persons in the list!";
@@ -97,22 +92,20 @@ class App extends Component {
             counterText += " :( ";
         }
 
-        //NOTE! classes.join turns the classes-array into a single String with a space between each element!
+        //NOTE! assignedClasses.join turns the assignedClasses-array into a single String with a space between each element!
         return (
-            <StyleRoot>
-                <div className="App">
-                    <h1>Hi, I'm a React App</h1>
-                    <p className={classes.join(' ')}>{counterText}</p>
-                    <button
-                        style={style}
-                        onClick={this.togglePersonsHandler}>
-                        Toggle Persons
-                    </button>
-                    {persons}
-                </div>
-            </StyleRoot>
+            <div className={classes.app}>
+                <h1>Hi, I'm a React App</h1>
+                <p className={assignedClasses.join(' ')}>{counterText}</p>
+                <button
+                    style={style}
+                    onClick={this.togglePersonsHandler}>
+                    Toggle Persons
+                </button>
+                {persons}
+            </div>
         );
     }
 }
 
-export default Radium(App);
+export default App;
