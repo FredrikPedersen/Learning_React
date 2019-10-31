@@ -45,17 +45,9 @@ class App extends Component {
     };
 
     render() {
-
-        const style = {
-            backgroundColor: 'green',
-            color: 'white',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer'
-        };
-
         let persons = null;
+        let btnClass = '';
+
         if (this.state.showPersons) {
             persons = (
                 <div>
@@ -70,19 +62,13 @@ class App extends Component {
                 </div>
             );
 
-            style.backgroundColor = 'red';
-            style[':hover'] = {
-                backgroundColor: 'salmon',
-                color: 'black'
-            }
+            btnClass = classes.red;
         }
 
         let assignedClasses = [];
-
         if (this.state.persons.length <= 2) {
             assignedClasses.push(classes.bold);
         }
-
         if (this.state.persons.length <= 1) {
             assignedClasses.push(classes.red);
         }
@@ -98,7 +84,7 @@ class App extends Component {
                 <h1>Hi, I'm a React App</h1>
                 <p className={assignedClasses.join(' ')}>{counterText}</p>
                 <button
-                    style={style}
+                    className={btnClass}
                     onClick={this.togglePersonsHandler}>
                     Toggle Persons
                 </button>
