@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import classes from './App.css';
-import Person from './Person/Person'
+import React, {Component} from "react";
+import classes from "./App.css";
+import Person from "./Person/Person";
 
 
 class App extends Component {
     state = {
         persons: [
-            {id: '1', name: 'Fredrik', age: 25},
-            {id: '2', name: "Anders", age: 23},
-            {id: '3', name: "Signe", age: 22}
+            {id: "1", name: "Fredrik", age: 25},
+            {id: "2", name: "Anders", age: 23},
+            {id: "3", name: "Signe", age: 22}
         ],
         showPersons: false
     };
@@ -46,7 +46,7 @@ class App extends Component {
 
     render() {
         let persons = null;
-        let btnClass = '';
+        let btnClass = "";
 
         if (this.state.showPersons) {
             persons = (
