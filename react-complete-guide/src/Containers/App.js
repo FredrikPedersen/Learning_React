@@ -5,6 +5,15 @@ import Cockpit from "../Components/Cockpit/Cockpit";
 
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+        console.log("[App.js] constructor");
+    }
+
+    //State may also be set in the constructor using this.state = ...
+    //Using the constructor to set state is still useful if you want to set state based on data from props
+    //Modern JS-practice is however to do it outside of the constructor like the following code:
     state = {
         persons: [
             {id: "1", name: "Fredrik", age: 25},
@@ -13,6 +22,15 @@ class App extends Component {
         ],
         showPersons: false
     };
+
+    static getDerivedStateFromProps(props, state) {
+        console.log("[App.js] getDerivedStateFromProps ", props);
+        return state;
+    }
+
+    componentDidMount() {
+        console.log("[App.js] componentDidMount")
+    }
 
     nameChangedHandler = (event, id) => {
         const personIndex = this.state.persons.findIndex(p => {
@@ -45,6 +63,7 @@ class App extends Component {
     };
 
     render() {
+        console.log("[App.js] render");
         let persons = null;
 
         if (this.state.showPersons) {
