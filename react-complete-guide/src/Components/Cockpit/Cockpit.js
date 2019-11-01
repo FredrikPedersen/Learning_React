@@ -22,6 +22,7 @@ const cockpit = (props) => {
         counterText += " :( ";
     }
 
+    //NOTE! assignedClasses.join turns the assignedClasses-array into a single String with a space between each element!
     return (
         <div className={styles.cockpit}>
             <h1>Hi, I'm a React App</h1>
