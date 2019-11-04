@@ -35,15 +35,15 @@ const cockpit = (props) => {
         btnClass = styles.red;
     }
 
-    if (props.persons.length <= 2) {
+    if (props.personsLength <= 2) {
         assignedClasses.push(styles.bold);
     }
-    if (props.persons.length <= 1) {
+    if (props.personsLength <= 1) {
         assignedClasses.push(styles.red);
     }
 
-    let counterText = "There are " + props.persons.length + " persons in the list!";
-    if (props.persons.length === 0) {
+    let counterText = "There are " + props.personsLength + " persons in the list!";
+    if (props.personsLength === 0) {
         counterText += " :( ";
     }
 
@@ -61,4 +61,4 @@ const cockpit = (props) => {
     );
 };
 
-export default cockpit;
+export default React.memo(cockpit);
