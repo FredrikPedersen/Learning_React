@@ -3,7 +3,7 @@ import styles from "../../Components/Cockpit/Cockpit.css";
 
 const cockpit = (props) => {
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+/*    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         console.log("[Cockpit.js] useEffect");
 
@@ -16,7 +16,7 @@ const cockpit = (props) => {
             clearTimeout(timer);
             console.log("[Cockpit.js] cleanup work in useEffect()");
         }
-    }, []); //Only triggers once the app is rendered. Add values (like props.persons) inside the array to trigger useEffect() every time a change is made to that value. May take in several values.
+    }, []); //Only triggers once the app is rendered. Add values (like props.persons) inside the array to trigger useEffect() every time a change is made to that value. May take in several values. */
 
     //You may have more than one useEffect setups, so it can be triggered by different changes!
     // eslint-disable-next-line react-hooks/rules-of-hooks
