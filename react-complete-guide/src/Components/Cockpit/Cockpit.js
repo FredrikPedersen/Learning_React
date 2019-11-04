@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import styles from "../../Components/Cockpit/Cockpit.css";
+import AuthContext from "../../Context/auth-context";
 
 const cockpit = (props) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -45,7 +46,9 @@ const cockpit = (props) => {
                 onClick={props.clicked}>
                 Toggle Persons
             </button>
-            <button onClick={props.login}>Log In</button>
+            <AuthContext.Consumer>
+                {context =>  <button onClick={context.login}>Log In</button> }
+            </AuthContext.Consumer>
         </div>
     );
 };

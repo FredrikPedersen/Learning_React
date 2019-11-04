@@ -3,6 +3,7 @@ import styles from "./App.css";
 import Persons from "../Components/Persons/Persons";
 import Cockpit from "../Components/Cockpit/Cockpit";
 import withClass from "../HigherOrderComponents/withClass"
+import AuthContext from "../Context/auth-context";
 
 
 class App extends Component {
@@ -102,18 +103,21 @@ class App extends Component {
                     this.state.showCockpit ? this.setState({showCockpit: false}) : this.setState({showCockpit: true})
                 }}>Remove Cockpit
                 </button>
-                {this.state.showCockpit ? (
-                    <Cockpit
-                        title={this.props.appTitle}
-                        showPersons={this.state.showPersons}
-                        personsLength={this.state.persons.length}
-                        clicked={this.togglePersonsHandler}
-                        login={this.loginHandler()}
-                    />
-                ) : null
-                }
-
-                {persons}
+                <AuthContext.Provider value={{
+                    authenticated: this.state.authenticated,
+                    login: this.loginHandler
+                }}
+                >
+                    {this.state.showCockpit ? (
+                        <Cockpit
+                            title={this.props.appTitle}
+                            showPersons={this.state.showPersons}
+                            personsLength={this.state.persons.length}
+                            clicked={this.togglePersonsHandler}
+                        />
+                    ) : null}
+                    {persons}
+                </AuthContext.Provider>
             </>
         );
     }
