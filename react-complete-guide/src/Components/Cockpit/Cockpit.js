@@ -8,11 +8,12 @@ const cockpit = (props) => {
         console.log("[Cockpit.js] useEffect");
 
         //Imitate a Http Request
-        setTimeout(() => {
+       const timer = setTimeout(() => {
             alert("Data saved to cloud!")
         }, 1000);
 
         return () => {
+            clearTimeout(timer);
             console.log("[Cockpit.js] cleanup work in useEffect()");
         }
     }, []); //Only triggers once the app is rendered. Add values (like props.persons) inside the array to trigger useEffect() every time a change is made to that value. May take in several values.
