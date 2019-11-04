@@ -17,7 +17,7 @@ class App extends Component {
     //Modern JS-practice is however to do it outside of the constructor like the following code:
     state = {
         persons: [
-            {id: "1", name: "Fredrik", age: 25},
+            {id: "1", name: "Fredrik", age: 28},
             {id: "2", name: "Anders", age: 23},
             {id: "3", name: "Signe", age: 22}
         ],

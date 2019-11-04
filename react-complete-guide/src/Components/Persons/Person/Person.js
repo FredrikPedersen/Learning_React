@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import withClass from "../../../HigherOrderComponents/withClass";
 import styles from "./Person.css"
+import PropTypes from "prop-types";
 
 class Person extends Component {
     render() {
@@ -14,5 +15,12 @@ class Person extends Component {
         );
     }
 }
+
+Person.propTypes = {
+    click: PropTypes.func,
+    changed: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number
+};
 
 export default withClass(Person, styles.Person);
