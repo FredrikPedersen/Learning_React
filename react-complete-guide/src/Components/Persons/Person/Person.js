@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+import withClass from "../../../HigherOrderComponents/withClass";
+import styles from "./Person.css"
 
 class Person extends Component {
     render() {
@@ -13,4 +15,4 @@ class Person extends Component {
     }
 }
 
-export default Person;
+export default withClass(Person, styles.Person);
