@@ -14,7 +14,7 @@ class Blog extends Component {
 
     componentDidMount() {
         //The then-method waits until get-method is done returning the data before it is executed
-        const posts = axios.get("https://jsonplaceholder.typicode.com/posts").then(response => {
+        axios.get("https://jsonplaceholder.typicode.com/posts").then(response => {
 
             //Slices the returned array down to the first twelve elements
             const posts = response.data.slice(0, 12);
