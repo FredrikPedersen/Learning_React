@@ -9,12 +9,13 @@ import './Blog.css';
 class Blog extends Component {
     state = {
         posts: [],
-        selectedPostId: null
+        selectedPostId: null,
+        error: false
     };
 
     componentDidMount() {
         //The then-method waits until get-method is done returning the data before it is executed
-        axios.get("https://jsonplaceholder.typicode.com/posts").then(response => {
+        axios.get("https://jsonplaceholder.typicode.com/postssss").then(response => {
 
             //Slices the returned array down to the first twelve elements
             const posts = response.data.slice(0, 12);
@@ -28,6 +29,8 @@ class Blog extends Component {
             });
 
             this.setState({posts: updatedPosts});
+        }).catch(error => {
+            this.setState({error: true});
         });
     }
 
@@ -36,13 +39,16 @@ class Blog extends Component {
     };
 
     render () {
-        const posts = this.state.posts.map(post => {
-            return <Post
-                key={post.id}
-                title={post.title}
-                author={post.author}
-                clicked={() => this.postClickedHandler(post.id)}/>;
-        });
+        let posts = <p style={{textAlign: "center", color: "red", fontWeight: "bold"}}>Something went Wrong!</p>;
+        if (!this.state.error) {
+            posts = this.state.posts.map(post => {
+                return <Post
+                    key={post.id}
+                    title={post.title}
+                    author={post.author}
+                    clicked={() => this.postClickedHandler(post.id)}/>;
+            });
+        }
 
         return (
             <div>
