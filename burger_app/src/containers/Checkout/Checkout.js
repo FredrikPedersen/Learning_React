@@ -13,6 +13,16 @@ class Checkout extends Component {
         }
     };
 
+    componentDidMount() {
+        const query = new URLSearchParams(this.props.location.search);
+        const ingredientsFromOrder = {};
+        for (let param of query.entries()) {
+            // ["salad", "1"]
+            ingredientsFromOrder[param[0]] = +param[1];
+        }
+        this.setState({ingredients: ingredientsFromOrder})
+    }
+
     checkoutCancelledHandler = () => {
         this.props.history.goBack();
     };
