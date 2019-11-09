@@ -1,12 +1,17 @@
 import React, {Component} from "react";
 import './Blog.css';
 import Posts from "./Posts/Posts";
-import NewPost from "./NewPost/NewPost";
+import asyncComponent from "../../higherOrderComponents/asyncComponent";
 import {Route, NavLink, Switch, Redirect} from "react-router-dom";
+
+//Makes sure the NewPost component is only loaded when needed, as in this enables lazy loading of NewPost.
+const AsyncNewPost = asyncComponent(() => {
+    return import("./NewPost/NewPost");
+});
 
 class Blog extends Component {
     state = {
-        auth: false
+        auth: true
     };
 
     render() {
@@ -33,8 +38,7 @@ class Blog extends Component {
                     </nav>
                 </header>
                 <Switch>
-                    {/* {this.state.auth ? <Route path="/new-post" exact component={NewPost}/> : null} Example on how to use a guard (in combination with the <Redirect from="/" to="/posts" />) */}
-                    <Route path="/new-post" exact component={NewPost}/>
+                    {this.state.auth ? <Route path="/new-post" exact component={AsyncNewPost}/> : null} {/*Example on how to use a guard (in combination with the <Redirect from="/" to="/posts" />). Set auth to false to block access */}
                     <Route path="/posts" component={Posts}/>
                     <Route render={() => <h1>Not Found</h1>}/> {/* This will catch any unknown route and render whatever you want. Will not be triggered if a redirect similar to the one below is active */}
                     <Redirect from="/" to="/posts" />
