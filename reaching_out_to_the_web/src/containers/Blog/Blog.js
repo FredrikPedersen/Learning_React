@@ -36,6 +36,7 @@ class Blog extends Component {
                     {/* {this.state.auth ? <Route path="/new-post" exact component={NewPost}/> : null} Example on how to use a guard (in combination with the <Redirect from="/" to="/posts" />) */}
                     <Route path="/new-post" exact component={NewPost}/>
                     <Route path="/posts" component={Posts}/>
+                    <Route render={() => <h1>Not Found</h1>}/> {/* This will catch any unknown route and render whatever you want. Will not be triggered if a redirect similar to the one below is active */}
                     <Redirect from="/" to="/posts" />
                 </Switch>
             </div>
