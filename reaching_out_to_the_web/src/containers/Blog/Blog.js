@@ -9,7 +9,7 @@ const AsyncNewPost = asyncComponent(() => {
     return import("./NewPost/NewPost");
 }); */
 
-//Enables lazy loading for NewPost using React's own lazy-function. Must React Suspense and be rendered as shown below.
+//Enables lazy loading for NewPost using React's own lazy-function. Must import React Suspense and be rendered as shown below.
 const NewPost = React.lazy(() => import("./NewPost/NewPost"));
 
 class Blog extends Component {
