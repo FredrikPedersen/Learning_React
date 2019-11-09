@@ -1,0 +1,3 @@
+Routing:
+1. npm install --save react-router-dom
+2. Wrap every component you want to use routing in with BrowserRouter. Will most likely be done inn App or Index.
