@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
 import Post from '../../components/Post/Post';
-import FullPost from '../../components/FullPost/FullPost';
-import NewPost from '../../components/NewPost/NewPost';
 import axios from "../../axios"; //Using the custom axios instance
 import './Blog.css';
 
@@ -18,7 +16,7 @@ class Blog extends Component {
         axios.get("/posts").then(response => {
 
             //Slices the returned array down to the first twelve elements
-            const posts = response.data.slice(0, 12);
+            const posts = response.data.slice(0, 4);
 
             //Adds a hardcoded author to each object in the array
             const updatedPosts = posts.map(post => {
@@ -51,9 +49,9 @@ class Blog extends Component {
         }
 
         return (
-            <div className="Blog">
+            <div>
                 <header>
-                    <nav>
+                    <nav className="Blog">
                         <ul>
                             <li><a href="/">Home</a></li>
                             <li><a href="/new-post">New Post</a></li>
@@ -62,12 +60,6 @@ class Blog extends Component {
                 </header>
                 <section className="Blog">
                     {posts}
-                </section>
-                <section className="Blog">
-                    <FullPost id={this.state.selectedPostId}/>
-                </section>
-                <section className="Blog">
-                    <NewPost />
                 </section>
             </div>
         );
