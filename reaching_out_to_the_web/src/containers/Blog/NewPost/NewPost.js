@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './NewPost.css';
 import axios from "axios";
 import {Redirect} from "react-router-dom";
@@ -10,6 +10,11 @@ class NewPost extends Component {
         author: 'Fredrik',
         submitted: false
     };
+
+    componentDidMount() {
+        //Example on how to redirect if the user is not authenticated
+        // if notAuthenticated => this.props.history.replace("/posts");
+    }
 
     postDataHandler = () => {
         const postData = {
@@ -25,7 +30,7 @@ class NewPost extends Component {
         });
     };
 
-    render () {
+    render() {
         /* let redirect = null;
 
         if (this.state.submitted) {
@@ -34,11 +39,14 @@ class NewPost extends Component {
 
         return (
             <div className="NewPost">
+                {/*{redirect}*/}
                 <h1>Add a Post</h1>
                 <label>Title</label>
-                <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
+                <input type="text" value={this.state.title}
+                       onChange={(event) => this.setState({title: event.target.value})}/>
                 <label>Content</label>
-                <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({content: event.target.value})} />
+                <textarea rows="4" value={this.state.content}
+                          onChange={(event) => this.setState({content: event.target.value})}/>
                 <label>Author</label>
                 <select value={this.state.author} onChange={(event) => this.setState({author: event.target.value})}>
                     <option value="Fredrik">Fredrik</option>
