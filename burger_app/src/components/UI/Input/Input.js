@@ -1,48 +1,45 @@
 import React from "react";
+
 import styles from "./Input.css";
 
-const input = (props) => {
+const input = ( props ) => {
     let inputElement = null;
 
-    switch (props.elementType) {
-        case ("input"):
+    switch ( props.elementType ) {
+        case ( "input" ):
             inputElement = <input
                 className={styles.InputElement}
                 {...props.elementConfig}
-                value={props.value}/>;
+                value={props.value}
+                onChange={props.changed} />;
             break;
-        case ("textarea"):
+        case ( "textarea" ):
             inputElement = <textarea
                 className={styles.InputElement}
                 {...props.elementConfig}
-                value={props.value}/>;
+                value={props.value}
+                onChange={props.changed} />;
             break;
-        case ("select"):
+        case ( "select" ):
             inputElement = (
                 <select
                     className={styles.InputElement}
-                    value={props.value}>
+                    value={props.value}
+                    onChange={props.changed}>
                     {props.elementConfig.options.map(option => (
-                        <option
-                            key={option.value}
-                            value={option.value}
-                        >{option.displayValue}
+                        <option key={option.value} value={option.value}>
+                            {option.displayValue}
                         </option>
                     ))}
                 </select>
             );
             break;
-
         default:
-            inputElement = <
-                input
+            inputElement = <input
                 className={styles.InputElement}
-                {...
-                    props.elementConfig
-                }
+                {...props.elementConfig}
                 value={props.value}
-            />;
-            break;
+                onChange={props.changed} />;
     }
 
     return (
@@ -51,6 +48,7 @@ const input = (props) => {
             {inputElement}
         </div>
     );
+
 };
 
 export default input;
