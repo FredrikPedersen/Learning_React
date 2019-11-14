@@ -44,7 +44,8 @@ class ContactData extends Component {
                 value: "",
                 validation: {
                     required: true,
-                    requiredLength: 4
+                    minLength: 4,
+                    maxLength: 4,
                 },
                 valid: false,
                 touched: false
@@ -98,8 +99,12 @@ class ContactData extends Component {
             isValid = value.trim !== "" && isValid;
         }
 
-        if (rules.requiredLength) {
-            isValid = value.length === rules.requiredLength && isValid;
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid
+        }
+
+        if (rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid
         }
 
         return isValid;
@@ -148,12 +153,14 @@ class ContactData extends Component {
 
     render () {
         const formElementsArray = [];
+
         for (let key in this.state.orderForm) {
             formElementsArray.push({
                 id: key,
                 config: this.state.orderForm[key]
             });
         }
+
         let form = (
             <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => (
@@ -164,15 +171,17 @@ class ContactData extends Component {
                         value={formElement.config.value}
                         invalid={!formElement.config.valid}
                         shouldValidate={formElement.config.validation}
-                        touchet={formElement.config.touched}
+                        touched={formElement.config.touched}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
                 <Button btnType="Success">ORDER</Button>
             </form>
         );
+
         if ( this.state.loading ) {
             form = <Spinner />;
         }
+
         return (
             <div className={classes.ContactData}>
                 <h4>Enter your Contact Data</h4>
