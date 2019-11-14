@@ -7,11 +7,58 @@ import axios from "../../../axios-orders";
 
 class ContactData extends Component {
     state = {
-        name: "",
-        email: "",
-        address: {
-            street: "",
-            postalCode: ""
+        orderForm: {
+            //This code is very bloated. Consider using a function for creating the objects in a future project.
+            name:  {
+                elementType: "input",
+                elementConfig: {
+                    type: "text",
+                    placeholder: "Your name"
+                },
+                value: ""
+            },
+            street: {
+                elementType: "input",
+                elementConfig: {
+                    type: "text",
+                    placeholder: "Street address"
+                },
+                value: ""
+            },
+            zipCode: {
+                elementType: "input",
+                elementConfig: {
+                    type: "number",
+                    placeholder: "Zip Code"
+                },
+                value: ""
+            },
+            country: {
+                elementType: "input",
+                elementConfig: {
+                    type: "text",
+                    placeholder: "Country"
+                },
+                value: ""
+            },
+            email: {
+                elementType: "input",
+                elementConfig: {
+                    type: "email",
+                    placeholder: "Mailaddress"
+                },
+                value: ""
+            },
+            deliveryMethod: {
+                elementType: "select",
+                elementConfig: {
+                   options: [
+                       {value: "fastest", displayValue: "Gotta Go Fast"},
+                       {value: "cheapest", displayValue: "Imma save muh moneh"}
+                       ]
+                },
+                value: ""
+            },
         },
         loading: false
     };
@@ -22,16 +69,6 @@ class ContactData extends Component {
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
-            customer: {
-                name: "Fredrik Pedersen",
-                address: {
-                    street: "Streetway 123",
-                    zipCode: "1234",
-                    country: "Norway"
-                },
-                email: "test@test.com"
-            },
-            deliveryMethod: "Gotta Go Fast"
         };
 
         axios.post("/orders.json", order)
@@ -47,7 +84,7 @@ class ContactData extends Component {
     render() {
         let form = (
             <form>
-                <Input inputtype="input" type="text" name="name" placeholder="Your Name"/>
+                <Input elementType="..." elementConfig="..." value="..."/>
                 <Input inputtype="input" type="text" name="email" placeholder="Your Email"/>
                 <Input inputtype="input" type="text" name="street" placeholder="Your Street"/>
                 <Input inputtype="input" type="text" name="postalCode" placeholder="Postal Code"/>
