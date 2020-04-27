@@ -18,3 +18,38 @@
 
 - In some cases, using Redux is overkill, and it is less used in smaller simple projects.
 
+### 275 - Installing Redux and React Redux
+
+```Bash
+npm install --save redux react-redux
+```
+
+
+ - An empty reducer
+```Javascript
+const initialState = {
+};
+
+const reducer = (state = initialState, action) => {
+};
+
+export default reducer;
+````
+
+- Configure index.js to utilize the reducer in the application
+```Javascript
+
+import aReducer from "./store/reducers/areducer";
+import anotherReducer from "./store/reducers/anotherReducer";
+
+//if multiple reducers
+const rootReducer = combineReducers({
+    reducer1: aReducer,
+    reducer2: anotherReducer
+});
+
+const store = createStore(rootReducer);
+
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+registerServiceWorker();
+```
