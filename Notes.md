@@ -18,7 +18,7 @@
 
 - In some cases, using Redux is overkill, and it is less used in smaller simple projects.
 
-### 275 - Installing Redux and React Redux
+### 275/276 - Installing Redux and Basic Setup
 
 ```Bash
 npm install --save redux react-redux
