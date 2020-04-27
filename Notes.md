@@ -31,6 +31,15 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+	switch(action.type) {
+		case "SOME_ACTION":
+			return {
+				...state,
+				someStateValue: state.someStateValue + 1
+			};
+		default:
+			return state;
+	}
 };
 
 export default reducer;
@@ -52,4 +61,26 @@ const store = createStore(rootReducer);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();
+```
+
+- In the component utilizing Redux for store management:
+```Javascript
+import { connect } from "react-redux";
+
+const component = () => {
+};
+
+const mapStateToProps = state => {
+	return {
+		someStateValue: state.value
+	}
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onSomeAction: () => dispatch({type: "SOME_ACTION"})
+	}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(component);
 ```
