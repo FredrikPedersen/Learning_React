@@ -11,20 +11,8 @@ import axios from "../../axios-orders";
 
 class BurgerBuilder extends Component {
     state = {
-        purchasing: false,
-        loading: false,
-        error: false
+        purchasing: false
     };
-
-    componentDidMount() {
-        axios.get("https://react-burger-app-8f293.firebaseio.com/ingredients.json")
-            .then(response => {
-                this.setState({ingredients: response.data});
-            })
-            .catch(error => {
-                this.setState({error: true});
-            })
-    }
 
     updatePurchaseState = (ingredients) => {
         //Create a sum-array with the ingredients. The map method replaces the names of the ingredients with their values.
@@ -83,10 +71,6 @@ class BurgerBuilder extends Component {
                 price={this.props.price}
                 purchaseCancelled={this.purchaseCancelHandler}
                 purchaseContinued={this.purchaseContinueHandler}/>;
-        }
-
-        if (this.state.loading) {
-            orderSummary = <Spinner/>;
         }
 
         return (
