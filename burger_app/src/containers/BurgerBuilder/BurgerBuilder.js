@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import Burger from "../../components/Burger/Burger"
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
@@ -17,13 +17,13 @@ class BurgerBuilder extends Component {
     };
 
     componentDidMount() {
-       /* axios.get("https://react-burger-app-8f293.firebaseio.com/ingredients.json")
+        axios.get("https://react-burger-app-8f293.firebaseio.com/ingredients.json")
             .then(response => {
                 this.setState({ingredients: response.data});
             })
             .catch(error => {
                 this.setState({error: true});
-            }) */
+            })
     }
 
     updatePurchaseState = (ingredients) => {
@@ -101,7 +101,7 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => {
-    return{
+    return {
         ingredients: state.ingredients,
         price: state.totalPrice
     }
