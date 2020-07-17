@@ -14,6 +14,10 @@ class BurgerBuilder extends Component {
         purchasing: false
     };
 
+    componentDidMount() {
+        this.props.onInitIngredients();
+    }
+
     updatePurchaseState = (ingredients) => {
         //Create a sum-array with the ingredients. The map method replaces the names of the ingredients with their values.
         const sum = Object.keys(ingredients).map(igKey => {
@@ -48,7 +52,7 @@ class BurgerBuilder extends Component {
         // {salad: true, meat: false, ...}
 
         let orderSummary = null;
-        let burger = this.state.error ?
+        let burger = this.props.error ?
             <p style={{fontSize: "10em", textAlign: "center", fontWeight: "bold", color: "red"}}>Ingredients can't be
                 loaded, please check you Internet connection!</p> : <Spinner/>;
 
@@ -87,14 +91,16 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (ingredientName) => dispatch(burgerBuilderActions.addIngredient(ingredientName)),
-        onIngredientRemoved: (ingredientName) => dispatch(burgerBuilderActions.removeIngredient(ingredientName))
+        onIngredientRemoved: (ingredientName) => dispatch(burgerBuilderActions.removeIngredient(ingredientName)),
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
     }
 };
 
