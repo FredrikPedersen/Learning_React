@@ -6,5 +6,5 @@ export {
 
 
 export {
-    purchaseBurgerStart
+    purchaseBurger
 } from "./order";
