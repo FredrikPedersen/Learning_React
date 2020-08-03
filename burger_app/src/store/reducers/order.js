@@ -7,6 +7,7 @@ const initialState = {
     purchased: false
 };
 
+//Each case can be extracted into their own functions for better readability
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.PURCHASE_INIT:

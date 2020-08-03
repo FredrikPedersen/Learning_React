@@ -14,6 +14,7 @@ const initialState = {
     error: false
 };
 
+//Each case can be extracted into their own functions for better readability
 const burgerBuilderReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
