@@ -11,7 +11,8 @@ const INGREDIENT_PRICES = {
 const initialState = {
     ingredients: null,
     totalPrice: 4,
-    error: false
+    error: false,
+    building: false
 };
 
 //Each case can be extracted into their own functions for better readability
@@ -22,7 +23,8 @@ const burgerBuilderReducer = (state = initialState, action) => {
             const updatedAddedIngredients = updateObject(state.ingredients, updatedAddedIngredient);
             const updatedAddedState = {
                 ingredients: updatedAddedIngredients,
-                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+                building: true
             };
 
             return updateObject(state, updatedAddedState);
@@ -32,7 +34,8 @@ const burgerBuilderReducer = (state = initialState, action) => {
             const updatedRemovedIngredients = updateObject(state.ingredients, updatedRemovedIngredient);
             const updatedRemovedState = {
                 ingredients: updatedRemovedIngredients,
-                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+                building: true
             };
 
             return updateObject(state, updatedRemovedState);
@@ -41,7 +44,8 @@ const burgerBuilderReducer = (state = initialState, action) => {
             return updateObject(state, {
                 ingredients: action.ingredients,
                 totalPrice: 4,
-                error: false
+                error: false,
+                building: false
             });
 
         case actionTypes.FETCH_INGREDIENTS_FAILED:
