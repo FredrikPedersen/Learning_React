@@ -1,0 +1,24 @@
+import React from "react";
+
+import {configure, shallow} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+
+import {BurgerBuilder} from "./BurgerBuilder";
+import BuildControls from "../../components/Burger/BuildControls/BuildControls";
+import NavigationItem from "../../components/Navigation/NavigationItems/NavigationItem/NavigationItem";
+
+
+configure({adapter: new Adapter()});
+
+describe("Burgerbuilder", () => {
+    let wrapper;
+
+    beforeEach(() => {
+        wrapper = shallow(<BurgerBuilder onInitIngredients={() =>{}}/>);
+    });
+
+    it("Should render Buildcontrols when recieving ingredients", () => {
+        wrapper.setProps({ings: {salad: 0}});
+        expect(wrapper.find(BuildControls)).toHaveLength(1);
+    });
+});
