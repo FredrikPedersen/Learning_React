@@ -5,8 +5,6 @@ import Adapter from "enzyme-adapter-react-16";
 
 import {BurgerBuilder} from "./BurgerBuilder";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
-import NavigationItem from "../../components/Navigation/NavigationItems/NavigationItem/NavigationItem";
-
 
 configure({adapter: new Adapter()});
 
