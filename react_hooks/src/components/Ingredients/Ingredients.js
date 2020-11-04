@@ -1,5 +1,7 @@
 import React, {useState} from "react";
+import axios from "axios";
 
+import {DATABASE_URL} from "../constants";
 import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
 import Search from "./Search";
@@ -8,10 +10,13 @@ const Ingredients = () => {
     const [ingredientsState, setIngredientsState] = useState([]);
 
     const addIngredientHandler = (ingredient) => {
-        setIngredientsState(prevIngredients => [
-            ...prevIngredients,
-            {id: Math.random().toString(), ...ingredient}
-        ]);
+        axios.post(DATABASE_URL + "ingredients.json", JSON.stringify({ingredient})).then(response => {
+            setIngredientsState(prevIngredients => [
+                ...prevIngredients,
+                {id: response.data.name, ...ingredient}
+            ]);
+        });
+
     };
 
     return (
