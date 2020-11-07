@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from "react";
 import axios from "axios";
 
-import {INGREDIENTS_URL} from "../constants";
+import {INGREDIENTS_URL, DELETE_INGREDIENTS_URL} from "../constants";
 import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
 import Search from "./Search";
@@ -32,13 +32,23 @@ const Ingredients = () => {
 
     };
 
+    const removeIngredientHandler = (ingredientId) => {
+        axios.delete(DELETE_INGREDIENTS_URL(ingredientId)).then(response => {
+            setIngredientsState(prevIngredients =>
+                prevIngredients.filter(ingredient => ingredient.id !== ingredientId)
+            );
+        });
+    };
+
     return (
         <div className="App">
             <IngredientForm onAddIngredient={addIngredientHandler}/>
 
             <section>
                 <Search onLoadIngredients={filteredIngredientsHandler}/>
-                <IngredientList ingredients={ingredientsState} onRemoveItem={() => {}}/>
+                <IngredientList
+                    ingredients={ingredientsState}
+                    onRemoveItem={removeIngredientHandler}/>
             </section>
         </div>
     );
