@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useCallback} from "react";
 import axios from "axios";
 
 import {INGREDIENTS_URL} from "../constants";
@@ -9,21 +9,6 @@ import Search from "./Search";
 const Ingredients = () => {
     const [ingredientsState, setIngredientsState] = useState([]);
 
-    useEffect(() => {
-        axios.get(INGREDIENTS_URL).then(response => {
-            const loadedIngredients = [];
-            for (const key in response.data) {
-                loadedIngredients.push({
-                    id: key,
-                    title: response.data[key].ingredient.title,
-                    amount: response.data[key].ingredient.amount
-                });
-            }
-            setIngredientsState(loadedIngredients);
-        });
-    }, []);
-
-
     /*  Uses ingredientsState as a dependency, thus re-rendering the component whenever the dependency changes.
         Do not use a state as a dependency in a real case, that would as always lead to an infinite loop.
         This is just an example.
@@ -32,9 +17,10 @@ const Ingredients = () => {
         console.log("RE-RENDERING INGREDIENTS COMPONENT", ingredientsState);
     }, [ingredientsState]); */
 
-    const filteredIngredientsHandler = (filteredIngredients) => {
+    //Use callback caches the function so it is not re-created when the component re-renders.
+    const filteredIngredientsHandler = useCallback(filteredIngredients => {
         setIngredientsState(filteredIngredients);
-    };
+    }, []);
 
     const addIngredientHandler = (ingredient) => {
         axios.post(INGREDIENTS_URL, JSON.stringify({ingredient})).then(response => {
