@@ -23,6 +23,7 @@ const Ingredients = () => {
         });
     }, []);
 
+
     /*  Uses ingredientsState as a dependency, thus re-rendering the component whenever the dependency changes.
         Do not use a state as a dependency in a real case, that would as always lead to an infinite loop.
         This is just an example.
@@ -30,6 +31,10 @@ const Ingredients = () => {
     useEffect(() => {
         console.log("RE-RENDERING INGREDIENTS COMPONENT", ingredientsState);
     }, [ingredientsState]); */
+
+    const filteredIngredientsHandler = (filteredIngredients) => {
+        setIngredientsState(filteredIngredients);
+    };
 
     const addIngredientHandler = (ingredient) => {
         axios.post(INGREDIENTS_URL, JSON.stringify({ingredient})).then(response => {
@@ -46,7 +51,7 @@ const Ingredients = () => {
             <IngredientForm onAddIngredient={addIngredientHandler}/>
 
             <section>
-                <Search/>
+                <Search onLoadIngredients={filteredIngredientsHandler}/>
                 <IngredientList ingredients={ingredientsState} onRemoveItem={() => {}}/>
             </section>
         </div>
