@@ -4,18 +4,13 @@ import axios from "axios";
 import {INGREDIENTS_URL, DELETE_INGREDIENTS_URL} from "../constants";
 import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
+import ErrorModal from "../UI/ErrorModal";
 import Search from "./Search";
 
 const Ingredients = () => {
     const [ingredientsState, setIngredientsState] = useState([]);
-
-    /*  Uses ingredientsState as a dependency, thus re-rendering the component whenever the dependency changes.
-        Do not use a state as a dependency in a real case, that would as always lead to an infinite loop.
-        This is just an example.
-
-    useEffect(() => {
-        console.log("RE-RENDERING INGREDIENTS COMPONENT", ingredientsState);
-    }, [ingredientsState]); */
+    const [isLoadingState, setIsLoadingState] = useState(false);
+    const [errorState, setErrorState] = useState();
 
     //Use callback caches the function so it is not re-created when the component re-renders.
     const filteredIngredientsHandler = useCallback(filteredIngredients => {
@@ -23,26 +18,37 @@ const Ingredients = () => {
     }, []);
 
     const addIngredientHandler = (ingredient) => {
+        setIsLoadingState(true);
         axios.post(INGREDIENTS_URL, JSON.stringify({ingredient})).then(response => {
-            setIngredientsState(prevIngredients => [
-                ...prevIngredients,
-                {id: response.data.name, ...ingredient}
-            ]);
+            setIsLoadingState(false);
+            setIngredientsState(prevIngredients => [...prevIngredients, {id: response.data.name, ...ingredient}]);
+        }).catch(error => {
+            setErrorState("Something went wrong when adding an ingredient");
         });
 
     };
 
     const removeIngredientHandler = (ingredientId) => {
+        setIsLoadingState(true);
         axios.delete(DELETE_INGREDIENTS_URL(ingredientId)).then(response => {
+            setIsLoadingState(false);
             setIngredientsState(prevIngredients =>
                 prevIngredients.filter(ingredient => ingredient.id !== ingredientId)
             );
+        }).catch(error => {
+            setErrorState("Something went wrong when deleting an ingredient");
         });
     };
 
+    const clearError = () => {
+        setErrorState(null);
+        setIsLoadingState(false);
+    }
+
     return (
         <div className="App">
-            <IngredientForm onAddIngredient={addIngredientHandler}/>
+            {errorState && <ErrorModal onClose={clearError}>{errorState}</ErrorModal>}
+            <IngredientForm onAddIngredient={addIngredientHandler} loading={isLoadingState}/>
 
             <section>
                 <Search onLoadIngredients={filteredIngredientsHandler}/>
