@@ -7,6 +7,6 @@ import AuthContextProvider from "./context/auth-context";
 
 ReactDOM.render(
     <AuthContextProvider>
-        <App />
+        <App/>
     </AuthContextProvider>,
     document.getElementById("root"));

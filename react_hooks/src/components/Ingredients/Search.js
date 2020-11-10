@@ -10,6 +10,7 @@ const Search = React.memo(props => {
     const [enteredFilterState, setEnteredFilterState] = useState("");
     const inputRef = useRef();
 
+    //useEffect allows us to perform side effects. See documentation.
     useEffect(() => {
         const timer = setTimeout(() => {
             if (enteredFilterState === inputRef.current.value) {

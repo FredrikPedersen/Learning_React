@@ -1,4 +1,4 @@
-import React, {useReducer, useCallback} from "react";
+import React, {useReducer, useCallback, useMemo} from "react";
 import axios from "axios";
 
 import {INGREDIENTS_URL, DELETE_INGREDIENTS_URL} from "../constants";
@@ -44,31 +44,47 @@ const Ingredients = () => {
         dispatchIngredients({type: "SET", ingredients: filteredIngredients});
     }, []);
 
-    const addIngredientHandler = (ingredient) => {
+    //useCallBack forces the function to only be rebuilt when it's dependencies change (in this case: dispatchHttp, but that one never changes).
+    //Note that components dependent on this function must use React.memo to utilize this.
+    const addIngredientHandler = useCallback((ingredient) => {
         dispatchHttp({type: "SEND"})
+
         axios.post(INGREDIENTS_URL, JSON.stringify({ingredient})).then(response => {
             dispatchHttp({type: "RESPONSE"})
             dispatchIngredients({type: "ADD", ingredient: {id: response.data.name, ...ingredient}})
+
         }).catch(error => {
             dispatchHttp({type: "ERROR", errorMessage: "Something went wrong when adding an ingredient"});
         });
 
-    };
+    }, []);
 
-    const removeIngredientHandler = (ingredientId) => {
+    //useCallBack forces the function to only be rebuilt when it's dependencies change (in this case: dispatchHttp, but that one never changes).
+    //Note that components dependent on this function must use React.memo to utilize this.
+    const removeIngredientHandler = useCallback((ingredientId) => {
         dispatchHttp({type: "SEND"})
+
         axios.delete(DELETE_INGREDIENTS_URL(ingredientId)).then(response => {
             dispatchHttp({type: "RESPONSE"})
             dispatchIngredients({type: "DELETE", id: ingredientId})
+
         }).catch(error => {
             dispatchHttp({type: "ERROR", errorMessage: "Something went wrong when deleting an ingredient"});
         });
-    };
+    }, []);
 
-    const clearError = () => {
+    const clearError = useCallback(() => {
         dispatchHttp({type: "CLEAR"})
-    }
-    
+    }, [])
+
+    //useMemo specifies data to be remembered, and only change when it's dependencies change.
+    //In this case we have wrapped removeIngredientHandler in useCallback to it never changes.
+    const ingredientList = useMemo(() => {
+        return (
+            <IngredientList ingredients={ingredientsState} onRemoveItem={removeIngredientHandler}/>
+        );
+    }, [ingredientsState])
+
     return (
         <div className="App">
             {httpState.error && <ErrorModal onClose={clearError}>{httpState.error}</ErrorModal>}
@@ -76,9 +92,7 @@ const Ingredients = () => {
 
             <section>
                 <Search onLoadIngredients={filteredIngredientsHandler}/>
-                <IngredientList
-                    ingredients={ingredientsState}
-                    onRemoveItem={removeIngredientHandler}/>
+                {ingredientList}
             </section>
         </div>
     );
