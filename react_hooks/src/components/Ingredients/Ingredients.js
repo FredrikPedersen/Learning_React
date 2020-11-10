@@ -22,7 +22,7 @@ const ingredientReducer = (currentIngredientsState, action) => {
 
 const Ingredients = () => {
     const [ingredientsState, dispatchIngredients] = useReducer(ingredientReducer, []);
-    const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier} = useHttp();
+    const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear} = useHttp();
 
     useEffect(() => {
         if (!isLoading && !error) {
@@ -37,27 +37,23 @@ const Ingredients = () => {
         }
     }, [data, reqExtra, reqIdentifier, isLoading, error]);
 
-    //Use callback caches the function so it is not re-created when the component re-renders.
+    //useCallback caches the function so it is not re-created when the component re-renders.
     const filteredIngredientsHandler = useCallback(filteredIngredients => {
         dispatchIngredients({type: "SET", ingredients: filteredIngredients});
     }, []);
 
-    //useCallBack forces the function to only be rebuilt when it's dependencies change (in this case: dispatchHttp, but that one never changes).
+    //useCallback caches the function so it is not re-created when the component re-renders.
     //Note that components dependent on this function must use React.memo to utilize this.
     const addIngredientHandler = useCallback((ingredient) => {
         sendRequest(INGREDIENTS_URL, "POST", JSON.stringify(ingredient), ingredient, "ADD_INGREDIENT");
     }, [sendRequest]);
 
 
-    //useCallBack forces the function to only be rebuilt when it's dependencies change (in this case: dispatchHttp, but that one never changes).
+    //useCallback caches the function so it is not re-created when the component re-renders.
     //Note that components dependent on this function must use React.memo to utilize this.
     const removeIngredientHandler = useCallback(ingredientId => {
         sendRequest(DELETE_INGREDIENTS_URL(ingredientId), "DELETE", null, ingredientId, "REMOVE_INGREDIENT");
     }, [sendRequest]);
-
-    const clearError = useCallback(() => {
-        dispatchHttp({type: "CLEAR"})
-    }, [])
 
     //useMemo specifies data to be remembered, and only change when it's dependencies change.
     //In this case we have wrapped removeIngredientHandler in useCallback to it never changes.
@@ -69,7 +65,7 @@ const Ingredients = () => {
 
     return (
         <div className="App">
-            {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
+            {error && <ErrorModal onClose={clear}>{error}</ErrorModal>}
             <IngredientForm onAddIngredient={addIngredientHandler} loading={isLoading}/>
 
             <section>
