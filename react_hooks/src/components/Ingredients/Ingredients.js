@@ -1,5 +1,4 @@
-import React, {useReducer, useCallback, useMemo} from "react";
-import axios from "axios";
+import React, {useReducer, useCallback, useMemo, useEffect} from "react";
 
 import {INGREDIENTS_URL, DELETE_INGREDIENTS_URL} from "../constants";
 import IngredientForm from "./IngredientForm";
@@ -23,7 +22,20 @@ const ingredientReducer = (currentIngredientsState, action) => {
 
 const Ingredients = () => {
     const [ingredientsState, dispatchIngredients] = useReducer(ingredientReducer, []);
-    const {isLoading, error, data, sendRequest} = useHttp();
+    const {isLoading, error, data, sendRequest, reqExtra, reqIdentifier} = useHttp();
+
+    useEffect(() => {
+        if (!isLoading && !error) {
+            if (reqIdentifier === "REMOVE_INGREDIENT") {
+                dispatchIngredients({type: "DELETE", id: reqExtra})
+            } else if (reqIdentifier === "ADD_INGREDIENT") {
+                dispatchIngredients({
+                    type: "ADD",
+                    ingredient: {id: data.name, ...reqExtra}
+                })
+            }
+        }
+    }, [data, reqExtra, reqIdentifier, isLoading, error]);
 
     //Use callback caches the function so it is not re-created when the component re-renders.
     const filteredIngredientsHandler = useCallback(filteredIngredients => {
@@ -33,14 +45,14 @@ const Ingredients = () => {
     //useCallBack forces the function to only be rebuilt when it's dependencies change (in this case: dispatchHttp, but that one never changes).
     //Note that components dependent on this function must use React.memo to utilize this.
     const addIngredientHandler = useCallback((ingredient) => {
-        sendRequest(INGREDIENTS_URL, "POST", ingredient);
-    }, [sendRequest()]);
+        sendRequest(INGREDIENTS_URL, "POST", JSON.stringify(ingredient), ingredient, "ADD_INGREDIENT");
+    }, [sendRequest]);
 
 
     //useCallBack forces the function to only be rebuilt when it's dependencies change (in this case: dispatchHttp, but that one never changes).
     //Note that components dependent on this function must use React.memo to utilize this.
     const removeIngredientHandler = useCallback(ingredientId => {
-        sendRequest(DELETE_INGREDIENTS_URL(ingredientId), "DELETE");
+        sendRequest(DELETE_INGREDIENTS_URL(ingredientId), "DELETE", null, ingredientId, "REMOVE_INGREDIENT");
     }, [sendRequest]);
 
     const clearError = useCallback(() => {
