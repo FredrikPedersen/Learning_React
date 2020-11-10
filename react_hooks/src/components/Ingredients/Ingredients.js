@@ -6,6 +6,7 @@ import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
 import ErrorModal from "../UI/ErrorModal";
 import Search from "./Search";
+import useHttp from "../../hooks/http";
 
 const ingredientReducer = (currentIngredientsState, action) => {
     switch (action.type) {
@@ -20,24 +21,9 @@ const ingredientReducer = (currentIngredientsState, action) => {
     }
 };
 
-const httpReducer = (currentHttpState, action) => {
-    switch (action.type) {
-        case "SEND":
-            return {loading: true, error: null};
-        case "RESPONSE":
-            return {...currentHttpState, loading: false};
-        case "ERROR":
-            return {loading: false, error: action.errorMessage};
-        case "CLEAR":
-            return {...currentHttpState, error: null}
-        default:
-            throw new Error("SHOULD NOT GET HERE!");
-    }
-};
-
 const Ingredients = () => {
     const [ingredientsState, dispatchIngredients] = useReducer(ingredientReducer, []);
-    const [httpState, dispatchHttp] = useReducer(httpReducer, {loading: false, error: null});
+    const {isLoading, error, data, sendRequest} = useHttp();
 
     //Use callback caches the function so it is not re-created when the component re-renders.
     const filteredIngredientsHandler = useCallback(filteredIngredients => {
@@ -47,31 +33,15 @@ const Ingredients = () => {
     //useCallBack forces the function to only be rebuilt when it's dependencies change (in this case: dispatchHttp, but that one never changes).
     //Note that components dependent on this function must use React.memo to utilize this.
     const addIngredientHandler = useCallback((ingredient) => {
-        dispatchHttp({type: "SEND"})
+        sendRequest(INGREDIENTS_URL, "POST", ingredient);
+    }, [sendRequest()]);
 
-        axios.post(INGREDIENTS_URL, JSON.stringify({ingredient})).then(response => {
-            dispatchHttp({type: "RESPONSE"})
-            dispatchIngredients({type: "ADD", ingredient: {id: response.data.name, ...ingredient}})
-
-        }).catch(error => {
-            dispatchHttp({type: "ERROR", errorMessage: "Something went wrong when adding an ingredient"});
-        });
-
-    }, []);
 
     //useCallBack forces the function to only be rebuilt when it's dependencies change (in this case: dispatchHttp, but that one never changes).
     //Note that components dependent on this function must use React.memo to utilize this.
-    const removeIngredientHandler = useCallback((ingredientId) => {
-        dispatchHttp({type: "SEND"})
-
-        axios.delete(DELETE_INGREDIENTS_URL(ingredientId)).then(response => {
-            dispatchHttp({type: "RESPONSE"})
-            dispatchIngredients({type: "DELETE", id: ingredientId})
-
-        }).catch(error => {
-            dispatchHttp({type: "ERROR", errorMessage: "Something went wrong when deleting an ingredient"});
-        });
-    }, []);
+    const removeIngredientHandler = useCallback(ingredientId => {
+        sendRequest(DELETE_INGREDIENTS_URL(ingredientId), "DELETE");
+    }, [sendRequest]);
 
     const clearError = useCallback(() => {
         dispatchHttp({type: "CLEAR"})
@@ -87,8 +57,8 @@ const Ingredients = () => {
 
     return (
         <div className="App">
-            {httpState.error && <ErrorModal onClose={clearError}>{httpState.error}</ErrorModal>}
-            <IngredientForm onAddIngredient={addIngredientHandler} loading={httpState.loading}/>
+            {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
+            <IngredientForm onAddIngredient={addIngredientHandler} loading={isLoading}/>
 
             <section>
                 <Search onLoadIngredients={filteredIngredientsHandler}/>
