@@ -17,9 +17,9 @@ const BurgerBuilder = (props) => {
     //Replaces componentDidMount
     useEffect(() => {
         props.onInitIngredients();
-    })
+    },[]);
 
-    const updatePurchaseState = (ingredients) => {
+    const updatePurchaseState = ingredients => {
         const sum = Object.keys(ingredients)
             .map(igKey => {
                 return ingredients[igKey];
@@ -28,14 +28,14 @@ const BurgerBuilder = (props) => {
                 return sum + el;
             }, 0);
         return sum > 0;
-    }
+    };
 
     const purchaseHandler = () => {
         if (props.isAuthenticated) {
             setPurchasingState(true);
         } else {
-            props.onSetAuthRedirectPath('/checkout');
-            props.history.push('/auth');
+            props.onSetAuthRedirectPath("/checkout");
+            props.history.push("/auth");
         }
     };
 
@@ -45,15 +45,15 @@ const BurgerBuilder = (props) => {
 
     const purchaseContinueHandler = () => {
         props.onInitPurchase();
-        props.history.push('/checkout');
+        props.history.push("/checkout");
     };
 
     const disabledInfo = {
         ...props.ings
-    }
+    };
 
     for (let key in disabledInfo) {
-        disabledInfo[key] = disabledInfo[key] <= 0
+        disabledInfo[key] = disabledInfo[key] <= 0;
     }
 
     let orderSummary = null;
@@ -74,25 +74,28 @@ const BurgerBuilder = (props) => {
                 />
             </>
         );
-
-        orderSummary =
+        orderSummary = (
             <OrderSummary
                 ingredients={props.ings}
                 price={props.price}
                 purchaseCancelled={purchaseCancelHandler}
                 purchaseContinued={purchaseContinueHandler}
-            />;
+            />
+        );
     }
-
+    // {salad: true, meat: false, ...}
     return (
         <>
-            <Modal show={purchasingState} modalClosed={purchaseCancelHandler}>
+            <Modal
+                show={purchasingState}
+                modalClosed={purchaseCancelHandler}
+            >
                 {orderSummary}
             </Modal>
             {burger}
         </>
     );
-}
+};
 
 const mapStateToProps = state => {
     return {
