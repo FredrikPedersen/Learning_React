@@ -3,7 +3,7 @@ import React from 'react';
 import classes from './Modal.css';
 import Backdrop from '../Backdrop/Backdrop';
 
-const modal = (props) => {
+const Modal = (props) => {
 
     return (
         <>
@@ -24,7 +24,7 @@ const modal = (props) => {
 //The custom comparison function overrides the default behaviour, and is best used when not all prop changes should update the component.
 //Replace shouldComponentUpdate.
 export default React.memo(
-    modal,
+    Modal,
     (prevProps, nextProps) =>
         nextProps.show === prevProps.show &&
         nextProps.children === prevProps.children
