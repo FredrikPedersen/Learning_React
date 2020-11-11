@@ -11,13 +11,14 @@ import * as actions from '../../store/actions/index';
 import axios from '../../axios-orders';
 
 const BurgerBuilder = (props) => {
+    const {onInitIngredients} = props;
     const [purchasingState, setPurchasingState] = useState(false);
 
     //Pass no dependencies to useEffect to ensure it only runs once when the component is mounted.
     //Replaces componentDidMount
     useEffect(() => {
-        props.onInitIngredients();
-    },[]);
+        onInitIngredients();
+    },[onInitIngredients]);
 
     const updatePurchaseState = ingredients => {
         const sum = Object.keys(ingredients)

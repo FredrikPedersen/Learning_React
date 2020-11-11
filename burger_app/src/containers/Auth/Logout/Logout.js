@@ -5,12 +5,13 @@ import {connect} from 'react-redux';
 import * as actions from '../../../store/actions/index';
 
 const Logout = (props) => {
+    const {onLogout} = props;
 
     //Pass no dependencies to useEffect to ensure it only runs once when the component is mounted.
     //Replaces componentDidMount
     useEffect(() => {
-        props.onLogout();
-    }, [])
+        onLogout();
+    }, [onLogout])
 
     return <Redirect to="/"/>;
 }

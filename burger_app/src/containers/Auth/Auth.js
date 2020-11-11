@@ -10,6 +10,7 @@ import * as actions from '../../store/actions/index';
 import {updateObject, checkValidity} from "../../utility";
 
 const Auth = (props) => {
+    const {buildingBurger, authRedirectPath, onSetAuthRedirectPath} = props;
     const [isSignupState, setIsSignupState] = useState(true);
     const [formState, setFormState] = useState({
         email: {
@@ -45,10 +46,10 @@ const Auth = (props) => {
     //Pass no dependencies to useEffect to ensure it only runs once when the component is mounted.
     //Replaces componentDidMount
     useEffect(() => {
-        if (!props.buildingBurger && props.authRedirectPath !== '/') {
-            props.onSetAuthRedirectPath();
+        if (!buildingBurger && authRedirectPath !== '/') {
+            onSetAuthRedirectPath();
         }
-    }, [])
+    }, [buildingBurger, authRedirectPath, onSetAuthRedirectPath])
 
     const inputChangedHandler = (event, controlName) => {
         const updatedControls = updateObject(formState, {

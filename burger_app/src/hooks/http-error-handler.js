@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from "react";
-import modal from "../components/UI/Modal/Modal";
+import {useState, useEffect} from "react";
 
 const useHttpErrorHandler = (httpClient) => {
     const [errorState, setErrorState] = useState(null);
