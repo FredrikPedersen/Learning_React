@@ -21,7 +21,8 @@ const Auth = React.lazy(() => {
 
 const App = (props) => {
 
-    //Pass no dependencies to useEffect to ensure it only runs once when the component is mounted
+    //Pass no dependencies to useEffect to ensure it only runs once when the component is mounted.
+    //Replaces componentDidMount
     useEffect(() => {
         props.onTryAutoSignup();
     }, [])
