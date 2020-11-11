@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import {DATABASE_URL} from "../../constants";
 import axios from '../../axios-orders';
 
 export const addIngredient = (name) => {
@@ -30,7 +31,7 @@ export const fetchIngredientsFailed = () => {
 
 export const initIngredients = () => {
     return dispatch => {
-        axios.get("https://react-burger-app-8f293.firebaseio.com/ingredients.json")
+        axios.get(DATABASE_URL + "ingredients.json")
             .then(response => {
                 dispatch(setIngredients(response.data));
             })
