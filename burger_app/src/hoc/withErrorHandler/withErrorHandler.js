@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Modal from '../../components/UI/Modal/Modal';
+import modal from '../../components/UI/Modal/Modal';
 
 const withErrorHandler = (WrappedComponent, axios) => {
     return props => {
@@ -33,11 +33,11 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
         return (
             <>
-                <Modal
+                <modal
                     show={errorState}
                     modalClosed={errorConfirmedHandler}>
                     {errorState ? errorState.message : null}
-                </Modal>
+                </modal>
                 <WrappedComponent {...props} />
             </>
         );

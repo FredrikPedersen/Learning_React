@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
-import Modal from '../../components/UI/Modal/Modal';
-import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import modal from '../../components/UI/Modal/Modal';
+import orderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions/index';
@@ -75,7 +75,7 @@ const BurgerBuilder = (props) => {
             </>
         );
         orderSummary = (
-            <OrderSummary
+            <orderSummary
                 ingredients={props.ings}
                 price={props.price}
                 purchaseCancelled={purchaseCancelHandler}
@@ -86,12 +86,12 @@ const BurgerBuilder = (props) => {
     // {salad: true, meat: false, ...}
     return (
         <>
-            <Modal
+            <modal
                 show={purchasingState}
                 modalClosed={purchaseCancelHandler}
             >
                 {orderSummary}
-            </Modal>
+            </modal>
             {burger}
         </>
     );
