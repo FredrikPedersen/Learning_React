@@ -25,7 +25,7 @@ const App = (props) => {
     //Replaces componentDidMount
     useEffect(() => {
         props.onTryAutoSignup();
-    }, [])
+    })
 
     let routes = (
         <Switch>
