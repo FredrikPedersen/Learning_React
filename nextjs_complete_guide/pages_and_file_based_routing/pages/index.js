@@ -1,16 +1,21 @@
 import Link from "next/link";
 
 export default function HomePage() {
+    const clients = [
+        {id: "fredrik", name: "Fredrik"},
+        {id: "thomas", name: "Thomas"},
+        {id: "jokke", name: "Jokke"},
+    ]
+
     return (
         <>
             <h1>The Home Page</h1>
             <ul>
-                <li>
-                    <Link href={"about"}>About</Link>
-                </li>
-                <li>
-                    <Link href={"clients"}>Clients</Link>
-                </li>
+                {clients.map(client => (
+                    <li key={client.id}>
+                        <Link href={`clients/${client.id}`}>{client.name}</Link>
+                    </li>
+                ))}
             </ul>
         </>
     )
