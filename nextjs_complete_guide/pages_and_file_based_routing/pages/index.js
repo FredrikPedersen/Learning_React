@@ -14,7 +14,7 @@ export default function HomePage() {
                 {clients.map(client => (
                     <li key={client.id}>
                         <Link href={{
-                            pathname: 'clients/[id]',
+                            pathname: '/clients/[id]',
                             query: {
                                 id: client.id
                             }

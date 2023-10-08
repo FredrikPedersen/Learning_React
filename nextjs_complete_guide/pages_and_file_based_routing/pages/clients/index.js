@@ -6,13 +6,13 @@ export default function ClientsPage() {
             <h1>The Clients Page</h1>
             <ul>
                 <li>
-                    <Link href={"clients/Fredrik"}>Fredrik</Link>
+                    <Link href={"/clients/Fredrik"}>Fredrik</Link>
                 </li>
                 <li>
-                    <Link href={"clients/Thomas"}>Thomas</Link>
+                    <Link href={"/clients/Thomas"}>Thomas</Link>
                 </li>
                 <li>
-                    <Link href={"clients/Jokke"}>Jokke</Link>
+                    <Link href={"/clients/Jokke"}>Jokke</Link>
                 </li>
             </ul>
         </>
