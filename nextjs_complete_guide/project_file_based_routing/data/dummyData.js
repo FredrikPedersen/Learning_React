@@ -1,3 +1,17 @@
+/**
+ * @typedef {Object} Event
+ * @property {string} id
+ * @property {string} title
+ * @property {string} description
+ * @property {string} location
+ * @property {string} date
+ * @property {string} image
+ * @property {boolean} isFeatured
+ */
+
+/**
+ * @type {[Event]}
+ */
 const DUMMY_EVENTS = [
     {
         id: 'e1',
@@ -31,14 +45,24 @@ const DUMMY_EVENTS = [
     },
 ];
 
+/**
+ * @returns {Event[]}
+ */
 export function getFeaturedEvents() {
     return DUMMY_EVENTS.filter((event) => event.isFeatured);
 }
 
+/**
+ * @returns {Event[]}
+ */
 export function getAllEvents() {
     return DUMMY_EVENTS;
 }
 
+/**
+ * @param {{year: number, month: number}} dateFilter
+ * @returns {Event[]}
+ */
 export function getFilteredEvents(dateFilter) {
     const { year, month } = dateFilter;
 
@@ -48,6 +72,10 @@ export function getFilteredEvents(dateFilter) {
     });
 }
 
+/**
+ * @param {string} id
+ * @returns {Event}
+ */
 export function getEventById(id) {
     return DUMMY_EVENTS.find((event) => event.id === id);
 }
