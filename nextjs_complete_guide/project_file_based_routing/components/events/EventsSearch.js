@@ -1,4 +1,4 @@
-import Button from "../ui/button";
+import Button from "../ui/Button";
 import classes from "./EventSearch.module.css";
 import {useCallback, useRef} from "react";
 
