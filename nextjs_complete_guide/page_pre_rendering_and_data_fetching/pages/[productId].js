@@ -33,9 +33,7 @@ export async function getStaticPaths() {
     return {
         paths: [
             {params: { productId: "p1"}},
-            {params: { productId: "p2"}},
-            {params: { productId: "p3"}}
         ],
-        fallback: false
+        fallback: 'blocking'
     }
 }
